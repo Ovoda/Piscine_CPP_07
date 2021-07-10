@@ -12,7 +12,7 @@ public:
 	//-> Constructors
 	Array(void) : _size(0)
 	{
-		_array = new T[0];
+		_array = NULL;
 	}
 
 	Array(unsigned int const &n) : _size(n)
@@ -26,14 +26,20 @@ public:
 	}
 
 	//-> Destructor
-	~Array() {}
+	~Array() {
+		if (_array)
+			delete [] _array;
+	}
 
 	//-> Overloads
 	Array<T> &operator=(Array<T> const &rhs)
 	{
+		_array = new T[rhs._size];
 		if (this != &rhs)
 		{
-			this->_size = rhs._size;
+			_size = rhs._size;
+			for (int i = 0; i < rhs._size; i++)
+				_array[i] = rhs._array[i];
 		}
 		return *this;
 	}
